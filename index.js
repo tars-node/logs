@@ -21,7 +21,7 @@ var path = require('path'),
 	assert = require('assert'),
 	cluster = require('cluster');
 
-var TarsConfigure = require('@tars/config-parser'),
+var TarsConfigure = require('@tars/utils').Config,
 	TarsDyeing = require('@tars/dyeing');
 
 var winston = require('winston'),

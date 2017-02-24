@@ -19,7 +19,7 @@
   ],
   "dependencies": {
     "@tars/winston-tars" : "latest",
-    "@tars/config-parser" : "latest",
+    "@tars/utils" : "latest",
     "@tars/dyeing" : "latest",
     "winston" : "2.1.1",
     "callsite" : "latest",

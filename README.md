@@ -52,7 +52,7 @@ __如果服务在 `本地环境` 中调试，所有日志类型都将输出至 C
 
 可通过调用 `tarsLogs.setConfig(data)` 静态方法进行初始化
 
-`data(String|Object)` 可以为 tars配置文件路径 或 已配置的 `@tars/config-parser` 实例。
+`data(String|Object)` 可以为 tars配置文件路径 或 已配置的 `(@tars/utils).Config` 实例。
 
 ## 使用
 
