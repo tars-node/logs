@@ -1,6 +1,6 @@
 # @tars/logs
 
-基于 [winston](https://github.com/flatiron/winston) 与 [winston-tars](http://git.oa.com/tars/winston-tars/tree/master) 开发，符合 TARS 框架规范的日志组件，其中包含染色日志、滚动（大小、时间）日志。
+基于 [winston](https://github.com/flatiron/winston) 与 [winston-tars](https://github.com/tars-node/winston-tars) 开发，符合 TARS 框架规范的日志组件，其中包含染色日志、滚动（大小、时间）日志。
 
 
 ## 安装
@@ -119,7 +119,7 @@ logger.info('data', {
 });
 ```
 
-更多详细信息，请参考 [@tars/winston-tars.Metadata](http://git.oa.com/tars/winston-tars/tree/master#metadata)
+更多详细信息，请参考 [@tars/winston-tars.Metadata](http://https://github.com/tars-node/winston-tars#metadata)
 
 ### 日志级别
 
@@ -149,7 +149,7 @@ logger.setLevel（'none'); // none 为一种特殊的日志级别，所有日志
 
 默认情况下，不同日志类型会使用不同的处理方法。
 
-关于 `Formatter` 的详情，请访问 [@tars/winston-tars.Formatter](http://git.oa.com/tars/winston-tars/tree/master)
+关于 `Formatter` 的详情，请访问 [@tars/winston-tars.Formatter](https://github.com/tars-node/winston-tars)
 
 ## 按大小滚动日志（TarsRotate）
 
@@ -159,7 +159,7 @@ logger.setLevel（'none'); // none 为一种特殊的日志级别，所有日志
 * __maxSize__: 单文件最大大小（单位为 bytes）， *默认值为 10M*   
 * __formatter__: 定义日志内容格式化方法， *默认值为 Formatter.Detail()*
 
-关于 `TarsRotate` 的详情，请访问 [@tars/winston-tars.TarsRotate](http://git.oa.com/tars/winston-tars/tree/master#tarsrotate)
+关于 `TarsRotate` 的详情，请访问 [@tars/winston-tars.TarsRotate](https://github.com/tars-node/winston-tars#tarsrotate)
 
 ## 时间相关（DateFormat）
 
@@ -188,7 +188,7 @@ var logger = new tarsLogs('TarsDate', 'access', {
 });
 ```
 
-关于 `DateFormat` 的详情，请访问 [@tars/winston-tars.DateFormat](http://git.oa.com/tars/winston-tars/tree/master#dateformat)
+关于 `DateFormat` 的详情，请访问 [@tars/winston-tars.DateFormat](https://github.com/tars-node/winston-tars#dateformat)
 
 ## 按时间滚动日志（TarsDate）
 
@@ -197,7 +197,7 @@ var logger = new tarsLogs('TarsDate', 'access', {
 * __format__: 创建新文件的间隔，为 DateFormat 对象， *默认值为 FORMAT.LogByDay*
 * __formatter__: 定义日志内容格式化方法， *默认值为 Formatter.Simple()*
 
-关于 `TarsDate` 的详情，请访问 [@tars/winston-tars.TarsDate](http://git.oa.com/tars/winston-tars/tree/master#tarsdate)
+关于 `TarsDate` 的详情，请访问 [@tars/winston-tars.TarsDate](https://github.com/tars-node/winston-tars#tarsdate)
 
 ## 染色
 
@@ -213,7 +213,7 @@ var logger = new tarsLogs('TarsDate', 'access', {
 
 染色对象标识了当前染色的状态（是否需要染色 及 附加信息）。
 
-染色对象需要通过 [@tars/dyeing](http://git.oa.com/tars/dyeing/tree/master) 提供的方法生成。
+染色对象需要通过 [@tars/dyeing](https://github.com/tars-node/dyeing) 提供的方法生成。
 
 为了便于使用，本模块封装了染色对象的生成方式。可通过 `logger.getDyeingObj()` 来获取染色对象。 
 
@@ -231,7 +231,7 @@ __实际应用中，不应调用此方法生成染色对象，而应直接使用
 
 符合染色标准的其它模块，均会提供 `Object.getDyeingObj()` 方法，可通过调用它获取染色对象，而不是使用此模块的方法。
 
-关于染色的详细信息，请访问 [@tars/dyeing](http://git.oa.com/tars/dyeing/tree/master) 获取。
+关于染色的详细信息，请访问 [@tars/dyeing](https://github.com/tars-node/dyeing) 获取。
 
 ### 使用
 
@@ -248,4 +248,4 @@ tars.TestImp.prototype.echo = function (current, i) {
    logger.info('data', current.getDyeingObj());
 }
 ```
-_`rpc` 具体获取染色对象的方式，请详见 [@tars/rpc](http://git.oa.com/tars/rpc/tree/master)_
+_`rpc` 具体获取染色对象的方式，请详见 [@tars/rpc](https://github.com/tars-node/rpc)_
