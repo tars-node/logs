@@ -1,15 +1,15 @@
 {
   "name": "@tars/logs",
   "version": "1.0.0",
-  "description": "基于 winston 与 winston-tars 开发，符合 TARS 框架规范的日志组件，其中包含染色日志、滚动（大小、时间）日志",
+  "description": "TARS 框架规范的日志组件，包含滚动（大小、时间）与染色日志",
   "main": "index.js",
   "repository": {
     "type": "git",
-    "url": "http://git.code.oa.com/taf/taf-logs.git"
+    "url": "https://github.com/tars-node/logs.git"
   },
-  "homepage": "http://git.oa.com/taf/taf-logs",
+  "homepage": "https://github.com/tars-node/logs",
   "bugs": {
-    "url": "http://git.oa.com/taf/taf-logs/issues"
+    "url": "https://github.com/tars-node/logs/issues"
   },
   "keywords": [
     "logs",
