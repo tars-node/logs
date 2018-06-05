@@ -132,8 +132,6 @@ var buildConsole = function(type, options) {
 };
 
 var tarsLogs = function(type, name, options) {
-	var ths = this;
-
 	if (!(this instanceof tarsLogs)) {
 		return new tarsLogs(type, name, options);
 	}
