@@ -1,6 +1,6 @@
 {
   "name": "@tars/logs",
-  "version": "1.0.0",
+  "version": "2.0.0",
   "description": "TARS 框架规范的日志组件，包含滚动（大小、时间）与染色日志",
   "main": "index.js",
   "repository": {
@@ -21,8 +21,8 @@
     "@tars/winston-tars" : "latest",
     "@tars/utils" : "latest",
     "@tars/dyeing" : "latest",
-    "winston" : "2.1.1",
-    "callsite" : "latest",
+    "winston" : "2.4.1",
+    "callsite" : "1.x.x",
     "cycle": "1.0.x"
   },
   "author": {
