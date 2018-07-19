@@ -33,6 +33,12 @@ var cycle = require('cycle');
 
 var tarsConfig, initialized = false, listened = false, instances = {};
 
+var LogTo = {
+	'Local' : 1,
+	'Remote' : 2,
+	'Both' : 3
+};
+
 var lineno = function() {
 	var stack = callsite()[3];
 	return path.basename(stack.getFileName()) + ':' + stack.getLineNumber();
@@ -174,27 +180,31 @@ var tarsLogs = function(type, name, options) {
 
 	assert(name || options.hasAppNamePrefix, 'name and options.hasAppNamePrefix can\'t be empty at the same time');
 
-	if (options.hasAppNamePrefix) {
-		options.filename = util.format('%s.%s', tarsConfig.get('tars.application.server.app'), 
-			tarsConfig.get('tars.application.server.server'));
+	if (type !== 'TarsRemote') {
+		if (options.hasAppNamePrefix) {
+			options.filename = util.format('%s.%s', tarsConfig.get('tars.application.server.app'), 
+				tarsConfig.get('tars.application.server.server'));
+		} else {
+			options.filename = '';
+		}
+
+		if (name) {
+			options.filename += (options.hasAppNamePrefix ? options.concatStr : '') + name;
+		}
+
+		if (options.hasSufix) {
+			options.filename += '.log';
+		}
+
+		options.filename = path.join(
+			tarsConfig.get('tars.application.server.logpath'), 
+			tarsConfig.get('tars.application.server.app'),
+			tarsConfig.get('tars.application.server.server'),
+			options.filename
+		);
 	} else {
-		options.filename = '';
+		options.filename = name;
 	}
-
-	if (name) {
-		options.filename += (options.hasAppNamePrefix ? options.concatStr : '') + name;
-	}
-
-	if (options.hasSufix) {
-		options.filename += '.log';
-	}
-
-	options.filename = path.join(
-		tarsConfig.get('tars.application.server.logpath'), 
-		tarsConfig.get('tars.application.server.app'),
-		tarsConfig.get('tars.application.server.server'),
-		options.filename
-	);
 
 	this.type = type;
 	this.name = name;
@@ -206,7 +216,9 @@ var tarsLogs = function(type, name, options) {
 		this._initCommon();
 	}
 
-	this._initDyeing();
+	if (type !== 'TarsRemote') {
+		this._initDyeing();
+	}
 	
 	if (type === 'TarsRotate') {
 		this.setLevel(tarsConfig.get('tars.application.server.logLevel', 'DEBUG'));
@@ -255,13 +267,28 @@ tarsLogs.prototype._initCommon = function() {
 tarsLogs.prototype._initTarsDate = function() {
 	var transports = [];
 
+	this.options.logTo = this.options.logTo || LogTo.Local;
 	this.options.formatter = this.options.formatter || winstonTars.Formatter.Simple({
 		separ : this.options.separ
 	});
 
-	transports.push(new (winston.transports.TarsDate)(this.options));
+	assert(Object.getOwnPropertyNames(LogTo).map(function(key) {
+		return LogTo[key];
+	}).indexOf(this.options.logTo) !== -1, 'LogTo NOT Valid');
+
+	if (this.options.logTo !== LogTo.Local && this.options.format) {
+		assert(this.options.format.name !== 'custom', 'options.format can\'t be custom in the case of LogTo.Both or Remote');
+	}
+
+	if (this.options.logTo === LogTo.Both || this.options.logTo === LogTo.Local) {
+		transports.push(new (winston.transports.TarsDate)(this.options));
+	}
 	
 	this.options.filename = this.name;
+
+	if (this.options.logTo === LogTo.Both || this.options.logTo === LogTo.Remote) {
+		transports.push(new (winston.transports.TarsRemote)(this.options));
+	}
 
 	this._commonLogger = new (winston.Logger)({transports : transports});
 
@@ -406,6 +433,7 @@ tarsLogs.prototype.close = function() {
 
 tarsLogs.prototype.getDyeingObj = getDyeingObj;
 
+tarsLogs.LogTo = LogTo;
 tarsLogs.DateFormat = winstonTars.DateFormat;
 tarsLogs.Formatter = winstonTars.Formatter;
 

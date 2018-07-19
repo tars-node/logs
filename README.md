@@ -19,6 +19,13 @@ var logger = new tarsLogs('TarsRotate');
 var logger = new tarsLogs('TarsDate', 'access');
 ```
 
+输出名为 access 的按天日志，只写本地不写远程日志
+``` js
+var logger = new tarsLogs('TarsDate', 'access', {
+	logTo : tarsLogs.LogTo.Local
+});
+```
+
 输出名为 access 的按小时日志
 ``` js
 var logger = new tarsLogs('TarsDate', 'access', {  
@@ -68,6 +75,7 @@ var logger = new tarsLogs(type, [name, options]);
 
 * __TarsRotate__: 按大小滚动日志  
 * __TarsDate__: 按时间滚动日志   
+* __TarsRemote__: 远程日志  
 
 `name(String)` 用户自定义的文件名（可不填）
 
@@ -163,7 +171,7 @@ logger.setLevel（'none'); // none 为一种特殊的日志级别，所有日志
 
 ## 时间相关（DateFormat）
 
-定义了与时间相关的日志（`TarsDate`）滚动的处理方法：
+定义了与时间相关的日志（`TarsDate`、`TarsRemote`）滚动的处理方法：
 
 * 按1天日志：LogByDay([interval, pattern])
 * 按1小时日志：LogByHour([interval, pattern])
@@ -196,8 +204,21 @@ var logger = new tarsLogs('TarsDate', 'access', {
 
 * __format__: 创建新文件的间隔，为 DateFormat 对象， *默认值为 FORMAT.LogByDay*
 * __formatter__: 定义日志内容格式化方法， *默认值为 Formatter.Simple()*
+* __logTo__: 日志发送的目标，为 LogTo 枚举， *默认值为 LogTo.Both*
+
+`LogTo` 枚举中有3项可选：
+
+* __LogTo.Remote__: 仅打远程日志（tars.tarslog.LogObj）
+* __LogTo.Local__: 仅打本地日志
+* __LogTo.Both__: 远程 + 本地
+
+_请注意：仅当 `LogTo.Local` 时，`options.format` 才可为 `DateFormat.LogByCustom`_
 
 关于 `TarsDate` 的详情，请访问 [@tars/winston-tars.TarsDate](https://github.com/tars-node/winston-tars#tarsdate)
+
+## 远程日志（TarsRemote）
+
+由于远程日志实现（与参数）较为复杂，请访问 [winston-tars.TarsRemote](https://github.com/tars-node/winston-tars#tarsremote) 获取详细信息。
 
 ## 染色
 
