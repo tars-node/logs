@@ -1,6 +1,6 @@
 {
   "name": "@tars/logs",
-  "version": "2.1.0",
+  "version": "2.1.1",
   "description": "TARS 框架规范的日志组件，包含滚动（大小、时间）与染色日志",
   "main": "index.js",
   "types": "tars-logs.d.ts",
