@@ -1,55 +1,55 @@
 # @tars/logs
 
-Based on [winston] (https://github.com/flatiron/winston) and [winston-tars] (https://github.com/tars-node/winston-tars), a log component conforming to the TARS framework specification, It contains staining logs, rolling (size, time) logs.
+Based on [winston](https://github.com/flatiron/winston) and [winston-tars](https://github.com/tars-node/winston-tars), a log component conforming to the TARS framework specification, It contains staining logs, rolling (size, time) logs.
 
 
 ## Installation
-`npm install @ tars / logs`
+`npm install @tars/logs`
 
 
 ## Examples
 
 Output rolling log
-`` `js
+```js
 var logger = new tarsLogs ('TarsRotate');
-`` `
+```
 
 Output daily log named access
-`` `js
+```js
 var logger = new tarsLogs ('TarsDate', 'access');
-`` `
+```
 
 Output daily logs named access, only local and not remote logs
-`` `js
+```js
 var logger = new tarsLogs ('TarsDate', 'access', {
 logTo: tarsLogs.LogTo.Local
 });
-`` `
+```
 
 Output an hourly log named access
-`` `js
+```js
 var logger = new tarsLogs ('TarsDate', 'access', {
 format: tarsLogs.DateFormat.LogByHour
 });
-`` `
+```
 
 Output a 20-minute scroll log named access in the format of 2015-01-01_10: 00
-`` `js
+```js
 var logger = new tarsLogs ('TarsDate', 'access', {
 format: new (tarsLogs.DateFormat.LogByMinute) (20, '% Y-% m-% d_% H:% M')
 });
-`` `
+```
 
-Specify output `INFO` level log information
-`` `js
+Specify output `INFO` level log information  
+```js
 logger.info ('data');
 logger.info ('data1', 'data2', 'data3');
-`` `
+```
 
 Specifies that the current `INFO` level log output needs to be dyed
-`` `js
+```js
 logger.info ('data', logger.getDyeingObj (true));
-`` `
+```
 
 ## Initialization
 
@@ -59,17 +59,17 @@ __If the service is debugged in the local environment, all log types will be out
 
 Can be initialized by calling the tarsLogs.setConfig (data) static method
 
-`data (String | Object)` can be a tars configuration file path or a configured `(@ tars / utils) .Config` instance.
+`data (String | Object)` can be a tars configuration file path or a configured `(@tars/utils).Config` instance.
 
 ## use
 
 ### Instantiation
 
-`` `js
+```js
 var tarsLogs = require ('@ tars / logs');
 
 var logger = new tarsLogs (type, [name, options]);
-`` `
+```
 
 `type (String)` log type:
 
@@ -88,18 +88,18 @@ var logger = new tarsLogs (type, [name, options]);
 
 For other parameters in `options`, please refer to the description of different log types.
 
-__ Under normal circumstances, the same log file should share the same `logger`, instead of instantiating multiple times__
+__Under normal circumstances, the same log file should share the same `logger`, instead of instantiating multiple times__
 
 ### Log output
 
-There are 4 log levels `TARS`` INFO`, `DEBUG`,` WARN`, and `ERROR`, which can be output by corresponding methods
+There are 4 log levels `INFO`, `DEBUG`,` WARN`, and `ERROR`, which can be output by corresponding methods
 
-`` `js
+```js
 logger.info ([data], [...]);
 logger.debug ([data], [...]);
 logger.warn ([data], [...]);
 logger.error ([data], [...]);
-`` `
+```
 
 The method supports multiple parameters, see [util.format ()] for details.
 
@@ -121,13 +121,13 @@ logger.info('data', {
 
 Custom file name and line number output:
 
-`` `js
+```js
 logger.info ('data', {
 lineno: 'app.js: 123'
 });
-`` `
+```
 
-For more details, please refer to [@ tars / winston-tars.Metadata] (http: // https: //github.com/tars-node/winston-tars#metadata)
+For more details, please refer to [@tars/winston-tars.Metadata](https://github.com/tars-node/winston-tars#metadata)
 
 ### Log level
 
@@ -137,10 +137,10 @@ Among them, except that the default level of TarsRotate is `DEBUG`, all others a
 
 If you need to change the log level, you can call the `logger.setLevel (level)` method and pass in the required log level:
 
-`` `js
+```js
 logger.setLevel ('info');
 logger.setLevel ('none'); // none is a special log level, all logs are not output
-`` `
+```
 
 If the service is running on the `TARS platform`:
 
@@ -157,17 +157,17 @@ The module provides two simplified log processing methods: Formatter.Simple () a
 
 Different log types use different processing methods by default.
 
-For more information on `Formatter`, please visit [@ tars / winston-tars.Formatter] (https://github.com/tars-node/winston-tars)
+For more information on `Formatter`, please visit [@tars/winston-tars.Formatter](https://github.com/tars-node/winston-tars)
 
 ## Scroll logs by size (TarsRotate)
 
 When initializing a `logger` of type` TarsRotate`, `options` also accepts the following parameters:
 
-* __maxFiles__: maximum total number of files (ie n in the example), * default is 10 *
-* __maxSize__: maximum file size (unit is bytes), * default is 10M *
-* __formatter__: Define the log content formatting method, * The default value is Formatter.Detail () *
+* __maxFiles__: maximum total number of files (ie n in the example), *default is 10*
+* __maxSize__: maximum file size (unit is bytes), *default is 10M*
+* __formatter__: Define the log content formatting method, *The default value is Formatter.Detail ()*
 
-For more information on `TarsRotate`, please visit [@ tars / winston-tars.TarsRotate] (https://github.com/tars-node/winston-tars#tarsrotate)
+For more information on `TarsRotate`, please visit [@tars/winston-tars.TarsRotate](https://github.com/tars-node/winston-tars#tarsrotate)
 
 ## Time correlation (DateFormat)
 
@@ -182,19 +182,19 @@ Among them, "interval" is the log rolling interval, and "pattern" is the format 
 
 In general, you can use literals directly:
 
-`` `js
+```js
 var logger = new tarsLogs ('TarsDate', 'access', {
-format: tarsLogs.DateFormat.LogByDay
+	format: tarsLogs.DateFormat.LogByDay
 });
-`` `
+```
 
 But if you need a custom interval or log file name, you need to instantiate:
 
-`` `js
+```js
 var logger = new tarsLogs ('TarsDate', 'access', {
-format: new tarsLogs.DateFormat.LogByDay (3, '% Y-% m-% d');
+	format: new tarsLogs.DateFormat.LogByDay (3, '% Y-% m-% d');
 });
-`` `
+```
 
 For more information on `DateFormat`, please visit [@ tars / winston-tars.DateFormat] (https://github.com/tars-node/winston-tars#dateformat)
 
@@ -214,11 +214,11 @@ There are 3 items in the `LogTo` enumeration:
 
 _Please note: `Options.format` can only be` DateFormat.LogByCustom` when `LogTo.Local`_
 
-For more information on `TarsDate`, please visit [@ tars / winston-tars.TarsDate] (https://github.com/tars-node/winston-tars#tarsdate)
+For more information on `TarsDate`, please visit [@tars/winston-tars.TarsDate](https://github.com/tars-node/winston-tars#tarsdate)
 
 ## Remote Log (TarsRemote)
 
-Due to the complexity of remote log implementation (and parameters), please visit [winston-tars.TarsRemote] (https://github.com/tars-node/winston-tars#tarsremote) for details.
+Due to the complexity of remote log implementation (and parameters), please visit [winston-tars.TarsRemote](https://github.com/tars-node/winston-tars#tarsremote) for details.
 
 ## dyeing
 
@@ -226,7 +226,7 @@ At the time of writing each log, you can specify whether the log needs to be dye
 
 Only the logs output by TarsRotate and TarsDate can be dyed.
 
-The dyed log is not only output according to the previous logic, but also an additional copy will be output under the same logic and placed in the `$ LOG_PATH $ / tars_dyeing /` directory.
+The dyed log is not only output according to the previous logic, but also an additional copy will be output under the same logic and placed in the `$LOG_PATH$/tars_dyeing/` directory.
 
 The stain log is always output in full (ignore the current log level for output).
 
@@ -234,39 +234,40 @@ The stain log is always output in full (ignore the current log level for output)
 
 The staining object identifies the current staining status (whether staining is required and additional information).
 
-Dyeing objects need to be generated by the method provided by [@ tars / dyeing] (https://github.com/tars-node/dyeing).
+Dyeing objects need to be generated by the method provided by [@ tars/dyeing](https://github.com/tars-node/dyeing).
 
-For ease of use, this module encapsulates the generation method of dyed objects. You can get the dyeing object through `logger.getDyeingObj ()`.
+For ease of use, this module encapsulates the generation method of dyed objects. You can get the dyeing object through `logger.getDyeingObj()`.
 
-Open stain
-``` js
+Open stain  
+```js
 logger.getDyeingObj(true);
 ```
 
 Open the dye and set the dyed val to guid and key to guidsn
-`` `js
+```js
 logger.getDyeingObj (true, 'guid', 'guid | sn');
-`` `
+```
 
 __In practical applications, this method should not be called to generate dyeing objects, but should be used directly from other modules .__
 
-Other modules that conform to the dyeing standard will provide the `Object.getDyeingObj ()` method, which can be used to get the dyeing object instead of using the module's methods.
+Other modules that conform to the dyeing standard will provide the `Object.getDyeingObj()` method, which can be used to get the dyeing object instead of using the module's methods.
 
-For more information about dyeing, please visit [@ tars / dyeing] (https://github.com/tars-node/dyeing).
+For more information about dyeing, please visit [@tars/dyeing](https://github.com/tars-node/dyeing).
 
 ### use
 
-When you need to dye a log, you need to pass the `staining object` as the last parameter of the` logger` specific method (log level).
+When you need to dye a log, you need to pass the `staining object` as the last parameter of the`logger` specific method (log level).
 
 Output the log content as data1 data2 and force the dyed log
-`` `js
+```js
 logger.info ('data1', 'data2', logger.getDyeingObj (true));
-`` `
+```
 
-Output the log content as `data` and dye the log based on the dyeing information on the` rpc.server` call chain
-`` `js
+Output the log content as `data` and dye the log based on the dyeing information on the`rpc.server` call chain
+```js
 tars.TestImp.prototype.echo = function (current, i) {
    logger.info ('data', current.getDyeingObj ());
 }
-`` `
+```
+
 _`rpc` For details on how to obtain dyed objects, please refer to [@tars/rpc](https://github.com/tars-node/rpc)_
